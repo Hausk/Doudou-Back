@@ -1,4 +1,3 @@
-import { AuthenticationException } from '@adonisjs/auth/build/standalone'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 /**

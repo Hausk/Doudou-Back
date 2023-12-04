@@ -1,7 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from '../Models/User'
-import SocialToken from '../Models/SocialToken'
-import { EnumType, schema } from '@ioc:Adonis/Core/Validator'
 
 export default class Admin {
   public async handle({ auth, response }: HttpContextContract, next: () => Promise<void>) {
