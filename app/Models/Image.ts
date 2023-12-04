@@ -11,9 +11,6 @@ export default class Image extends BaseModel {
   public createdAt: DateTime
 
   @column()
-  public title: string
-
-  @column()
   public path: string
 
   @hasOne(() => User)
