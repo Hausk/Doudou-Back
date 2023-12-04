@@ -1,25 +1,30 @@
-/*
-|--------------------------------------------------------------------------
-| Routes
-|--------------------------------------------------------------------------
-|
-| This file is dedicated for defining HTTP routes. A single file is enough
-| for majority of projects, however you can define routes in different
-| files and just make sure to import them inside this file. For example
-|
-| Define routes in following two files
-| ├── start/routes/cart.ts
-| ├── start/routes/customer.ts
-|
-| and then import them inside `start/routes.ts` as follows
-|
-| import './routes/cart'
-| import './routes/customer'
-|
-*/
-
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async () => {
-  return { hello: 'world' }
-})
+//Gestion des utilisateurs
+Route.get("/google/redirect", "AuthController.redirect");
+Route.get("/google/callback", "AuthController.handleCallback");
+//Temporaire
+Route.get("/status", "AuthController.status");
+Route.post('/auth/register', 'AuthController.register')
+Route.post("/logout", "AuthController.logout");
+
+//Gestion du dashboard
+Route.group(() => {
+    Route.group(() => {
+        Route.get("", "WorksController.showAll").middleware('coadmin')
+        Route.get("/:id", "WorksController.show")
+        Route.post("/create", "WorksController.create").middleware('coadmin')
+        Route.delete("/delete/:id", "WorksController.delete").middleware('admin')
+    }).prefix("works")
+    Route.group(() => {
+        Route.get("", "UsersController.showAll").middleware('coadmin')
+        Route.get("/:id", "UsersController.show").middleware('coadmin')
+        Route.post("/create", "UsersController.create").middleware('admin')
+        Route.delete("/delete/:id", "UsersController.delete").middleware('admin')
+    }).prefix("account")
+    Route.post("/image/upload", "ImagesController.upload").middleware('coadmin')
+    Route.delete("/image/delete", "ImagesController.delete").middleware('admin')
+}).prefix("dashboard").middleware('auth')
+Route.get("/test", "UsersController.test")
+
+
