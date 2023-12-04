@@ -19,9 +19,6 @@ export default class Work extends BaseModel {
   @column()
   public date: string
 
-  @column()
-  public access_token: string
-
   @hasOne(() => Image)
   public PinnedImage: HasOne<typeof Image>
 
